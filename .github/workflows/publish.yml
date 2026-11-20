@@ -1,42 +1,41 @@
-﻿name: Publish to PyPI
+name: Publish aka-kg to PyPI
 
 on:
   push:
     tags:
-      - "v*"
-  workflow_dispatch:
+      - "v*.*.*"
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/aka-kg
-    permissions:
-      id-token: write
-
+      url: https://pypi.org/project/aka-kg/
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install build and validation tools
-        run: python -m pip install --upgrade pip build twine
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip build twine
 
-      - name: Build distribution artifacts
+      - name: Build sdist and wheel
         run: python -m build
 
-      - name: Validate distributions
+      - name: Verify distribution archives
         run: twine check dist/*
 
       - name: Publish to PyPI via Trusted Publisher
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: dist/
+          print-hash: true
