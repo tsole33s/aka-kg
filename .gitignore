@@ -1,0 +1,13 @@
+﻿__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+.venv/
+venv/
+diag.py
+patch_v010.py
+probe.py
+probe_prompts.py

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aka-kg"
+version = "0.1.0"
+description = "Autonomous Knowledge Acquisition: a frozen LLM outer-loop library with graph-driven question selection"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "OpenSource"}
+authors = [{name = "Vanthony Laster", email = "support@tyrantsole.com"}]
+dependencies = ["numpy>=1.24", "networkx>=3.0"]
+
+[project.optional-dependencies]
+llm = ["litellm>=1.0"]
+full = ["aka-kg[llm]", "sentence-transformers>=2.0"]
+dev = ["pytest>=7.0", "pytest-cov>=4.0", "ruff>=0.4", "mypy>=1.0", "build>=1.0", "twine>=5.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+aka = ["py.typed"]
